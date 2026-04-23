@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ lead.contact_name }} - Django CI Project{% endblock %}
+
+{% block content %}
+<h1>{{ lead.contact_name }}</h1>
+<a href="{% url 'sales_dept:lead_list' %}" class="btn" style="margin-bottom: 1rem;">Back to Leads</a>
+
+<div class="card">
+    <div class="card-title">Lead Details</div>
+    <p><strong>Contact Name:</strong> {{ lead.contact_name }}</p>
+    <p><strong>Company:</strong> {{ lead.company }}</p>
+    <p>
+        <strong>Status:</strong> 
+        {% if lead.status == 'new' %}
+            <span style="color: blue;">New</span>
+        {% elif lead.status == 'contacted' %}
+            <span style="color: orange;">Contacted</span>
+        {% else %}
+            <span style="color: green;">Converted</span>
+        {% endif %}
+    </p>
+    <p><strong>Created:</strong> {{ lead.created_at }}</p>
+    <p><strong>Updated:</strong> {{ lead.updated_at }}</p>
+</div>
+{% endblock %}
