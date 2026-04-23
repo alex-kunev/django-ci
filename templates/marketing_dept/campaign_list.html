@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Campaigns - Django CI Project{% endblock %}
+
+{% block content %}
+<h1>Marketing Campaigns</h1>
+<a href="{% url 'marketing_dept:campaign_list' %}" class="btn" style="margin-bottom: 1rem;">Refresh</a>
+
+{% if campaigns %}
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Budget</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for campaign in campaigns %}
+            <tr>
+                <td>{{ campaign.title }}</td>
+                <td>${{ campaign.budget }}</td>
+                <td>{% if campaign.active %}<span style="color: green;">Active</span>{% else %}<span style="color: red;">Inactive</span>{% endif %}</td>
+                <td>{{ campaign.created_at|date:"Y-m-d" }}</td>
+                <td><a href="{% url 'marketing_dept:campaign_detail' campaign.pk %}" class="btn">View</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_paginated %}
+<div class="pagination" style="margin-top: 1rem;">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+{% else %}
+<div class="alert">No campaigns found. Add some from the admin panel!</div>
+{% endif %}
+{% endblock %}

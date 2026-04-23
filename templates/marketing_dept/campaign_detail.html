@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ campaign.title }} - Django CI Project{% endblock %}
+
+{% block content %}
+<h1>{{ campaign.title }}</h1>
+<a href="{% url 'marketing_dept:campaign_list' %}" class="btn" style="margin-bottom: 1rem;">Back to Campaigns</a>
+
+<div class="card">
+    <div class="card-title">Campaign Details</div>
+    <p><strong>Title:</strong> {{ campaign.title }}</p>
+    <p><strong>Budget:</strong> ${{ campaign.budget }}</p>
+    <p><strong>Status:</strong> {% if campaign.active %}<span style="color: green;">Active</span>{% else %}<span style="color: red;">Inactive</span>{% endif %}</p>
+    <p><strong>Created:</strong> {{ campaign.created_at }}</p>
+    <p><strong>Updated:</strong> {{ campaign.updated_at }}</p>
+</div>
+{% endblock %}

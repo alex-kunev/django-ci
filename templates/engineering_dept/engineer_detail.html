@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ engineer.name }} - Django CI Project{% endblock %}
+
+{% block content %}
+<h1>{{ engineer.name }}</h1>
+<a href="{% url 'engineering_dept:engineer_list' %}" class="btn" style="margin-bottom: 1rem;">Back to Engineers</a>
+
+<div class="card">
+    <div class="card-title">Engineer Details</div>
+    <p><strong>Name:</strong> {{ engineer.name }}</p>
+    <p><strong>Email:</strong> <a href="mailto:{{ engineer.email }}">{{ engineer.email }}</a></p>
+    <p><strong>Role:</strong> {{ engineer.role }}</p>
+    <p><strong>Created:</strong> {{ engineer.created_at }}</p>
+</div>
+{% endblock %}

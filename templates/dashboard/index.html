@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Django CI Project{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p>Welcome to the Django CI Project Dashboard. This is a sample project demonstrating CI/CD practices.</p>
+
+<div class="card">
+    <div class="card-title">Project Overview</div>
+    <p>This project contains four main departments:</p>
+    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+        <li><strong>Engineering:</strong> Manage engineers and their roles</li>
+        <li><strong>Marketing:</strong> Manage marketing campaigns</li>
+        <li><strong>Sales:</strong> Track sales leads</li>
+        <li><strong>Dashboard:</strong> Overview of all departments</li>
+    </ul>
+</div>
+
+<div class="card">
+    <div class="card-title">Quick Navigation</div>
+    <p>
+        <a href="{% url 'engineering_dept:engineer_list' %}" class="btn">View Engineers</a>
+        <a href="{% url 'marketing_dept:campaign_list' %}" class="btn">View Campaigns</a>
+        <a href="{% url 'sales_dept:lead_list' %}" class="btn">View Leads</a>
+    </p>
+</div>
+{% endblock %}

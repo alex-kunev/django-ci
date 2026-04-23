@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Leads - Django CI Project{% endblock %}
+
+{% block content %}
+<h1>Sales Leads</h1>
+<a href="{% url 'sales_dept:lead_list' %}" class="btn" style="margin-bottom: 1rem;">Refresh</a>
+
+{% if leads %}
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Contact</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lead in leads %}
+            <tr>
+                <td>{{ lead.contact_name }}</td>
+                <td>{{ lead.company }}</td>
+                <td>
+                    {% if lead.status == 'new' %}
+                        <span style="color: blue;">New</span>
+                    {% elif lead.status == 'contacted' %}
+                        <span style="color: orange;">Contacted</span>
+                    {% else %}
+                        <span style="color: green;">Converted</span>
+                    {% endif %}
+                </td>
+                <td>{{ lead.created_at|date:"Y-m-d" }}</td>
+                <td><a href="{% url 'sales_dept:lead_detail' lead.pk %}" class="btn">View</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_paginated %}
+<div class="pagination" style="margin-top: 1rem;">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+{% else %}
+<div class="alert">No leads found. Add some from the admin panel!</div>
+{% endif %}
+{% endblock %}
